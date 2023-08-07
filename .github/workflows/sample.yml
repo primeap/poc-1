@@ -13,7 +13,7 @@ jobs:
     - name: Checkout Repo-2
       uses: actions/checkout@v2
       with:
-        repository: <repo-2-owner>/<repo-2-name>
+        repository: https://github.com/primeap/poc-2
         ref: main  # Change this to the desired branch name
 
     - name: Create Tag and Release
@@ -42,7 +42,8 @@ jobs:
               "date": "YYYY-MM-DDTHH:MM:SSZ"
             }
           }' \
-          "https://api.github.com/repos/$REPO_2_OWNER/$REPO_2_NAME/git/tags"
+          
+          "https://api.github.com/repos/primeap/poc-2/git/tags"
 
         # Create a reference to the tag
         curl -X POST \
