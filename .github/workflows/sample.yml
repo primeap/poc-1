@@ -13,7 +13,7 @@ jobs:
     - name: Checkout Repo-2
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/primeap/poc-2
+        repository: primeap/poc-2
         ref: main  # Change this to the desired branch name
 
     - name: Create Tag and Release
@@ -52,6 +52,6 @@ jobs:
             "ref": "refs/tags/$NEW_TAG_NAME",
             "sha": "$NEW_TAG_SHA"
           }' \
-          "https://api.github.com/repos/$REPO_2_OWNER/$REPO_2_NAME/git/refs"
+          "https://api.github.com/repos/primeap/poc-2/git/tags/refs"
       env:
         GENERIC_TOKEN: ${{ secrets.GENERIC_TOKEN }}
