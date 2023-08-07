@@ -18,6 +18,8 @@ jobs:
 
     - name: Create Tag and Release
       run: |
+        pwd
+        ls
         # Get the generic token from the secrets
         GENERIC_TOKEN=$GENERIC_TOKEN
 
