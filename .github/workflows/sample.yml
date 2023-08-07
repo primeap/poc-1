@@ -17,6 +17,7 @@ jobs:
       env:
         API_TOKEN: ${{ secrets.GENERIC_TOKEN }}  # Set your secret name accordingly
       run: |
+        set -x
         REPO_OWNER=primeap
         REPO_NAME=poc-2
         NEW_TAG_NAME=my-new-tag  # Change this to the desired tag name
