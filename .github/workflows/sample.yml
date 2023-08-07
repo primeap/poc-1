@@ -1,56 +1,32 @@
-name: Create Tag and Release
+name: Tag poc-2 Repo
 
 on:
-  schedule:
-    - cron: "*/2 * * * *"
+  push:
+    branches:
+      - main  # Change this to your default branch if it's not named 'main'
 
 jobs:
-  create-tag:
+  tag_poc2:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo-2
+    - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        repository: primeap/poc-2
-        ref: main  # Change this to the desired branch name
 
-    - name: Create Tag and Release...
-      run: |
-        pwd
-        ls
-        # Get the generic token from the secrets
-        GENERIC_TOKEN=$GENERIC_TOKEN
-
-        # Replace with your GitHub API endpoint and repo-2 information
-        REPO_2_OWNER=primeap
-        REPO_2_NAME=poc-2
-        NEW_TAG_NAME=v1.0.0  # Change this to the desired tag name
-
-        # Create a tag using GitHub API
-        curl -X POST \
-          -H "Authorization: token $GENERIC_TOKEN" \
-          -d '{
-            "tag": "$NEW_TAG_NAME",
-            "message": "Tag $NEW_TAG_NAME",
-            "object": "main",
-            "type": "commit",
-            "tagger": {
-              "name": "Your Name",
-              "email": "your.email@example.com",
-              "date": "YYYY-MM-DDTHH:MM:SSZ"
-            }
-          }' \
-          
-          "https://api.github.com/repos/primeap/poc-2/git/tags"
-
-        # Create a reference to the tag
-        curl -X POST \
-          -H "Authorization: token $GENERIC_TOKEN" \
-          -d '{
-            "ref": "refs/tags/$NEW_TAG_NAME",
-            "sha": "$NEW_TAG_SHA"
-          }' \
-          "https://api.github.com/repos/primeap/poc-2/git/tags/refs"
+    - name: Tag poc-2 Repo
       env:
-        GENERIC_TOKEN: ${{ secrets.GENERIC_TOKEN }}
+        API_TOKEN: ${{ secrets.GENERIC_TOKEN }}  # Set your secret name accordingly
+      run: |
+        REPO_OWNER=primeap
+        REPO_NAME=poc-2
+        NEW_TAG_NAME=my-new-tag  # Change this to the desired tag name
+        API_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/git/refs"
+        
+        # Create tag object
+        TAG_SHA=$(git rev-parse HEAD)
+        TAG_DATA="{ \"ref\": \"refs/tags/$NEW_TAG_NAME\", \"sha\": \"$TAG_SHA\" }"
+        
+        # Create tag reference
+        response=$(curl -X POST -H "Authorization: token $API_TOKEN" -d "$TAG_DATA" $API_URL)
+
+        echo "Response from API: $response"
