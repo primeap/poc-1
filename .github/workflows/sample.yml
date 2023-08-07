@@ -16,7 +16,7 @@ jobs:
         repository: primeap/poc-2
         ref: main  # Change this to the desired branch name
 
-    - name: Create Tag and Release
+    - name: Create Tag and Release...
       run: |
         pwd
         ls
