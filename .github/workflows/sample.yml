@@ -1,9 +1,8 @@
 name: Create Tag and Release
 
 on:
-  push:
-    branches:
-      - main  # Change this to the desired branch name
+  schedule:
+    - cron: "*/2 * * * *"
 
 jobs:
   create-tag:
